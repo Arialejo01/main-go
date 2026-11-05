@@ -34,14 +34,10 @@ func (m *Medicine) SetShelfLife(meses int) {
 	}
 }
 
-// 6. Método para calcular caducidad (Suma los meses a la fecha de fabricación)
 func (m *Medicine) CalcularCaducidad() time.Time {
 	return m.manufactureDate.AddDate(0, m.shelfLife, 0)
 }
 
-// ==========================================
-// Estructura Tablet (Hija - usa composición)
-// ==========================================
 type Tablet struct {
 	Medicine       
 	dosePerTablet  float64
@@ -59,40 +55,3 @@ func NuevoTablet(nombre, fabricante string, fecha time.Time, vidaUtil int, dosis
 	return t
 }
 
-func (t *Tablet) SetDosis(nuevaDosis float64) {
-	if nuevaDosis > 0 {
-		t.dosePerTablet = nuevaDosis
-	}
-}
-
-func (t *Tablet) GetDosis() float64 {
-	return t.dosePerTablet
-}
-
-func (t *Tablet) MostrarDetalles() {
-	fmt.Println("Tableta:", t.name, "| Fabricante:", t.manufacturer, "| Dosis:", t.dosePerTablet, "mg")
-}
-
-// ==========================================
-// Estructura Syrup (Hija - usa composición)
-// ==========================================
-type Syrup struct {
-	Medicine
-	volume float64
-	flavor string
-}
-
-func NuevoSyrup(nombre, fabricante string, fecha time.Time, vidaUtil int, volumen float64, sabor string) Syrup {
-	s := Syrup{}
-	s.SetName(nombre)
-	s.manufacturer = fabricante
-	s.manufactureDate = fecha
-	s.SetShelfLife(vidaUtil)
-	s.volume = volumen
-	s.flavor = sabor
-	return s
-}
-
-func (s *Syrup) MostrarDetalles() {
-	fmt.Println("Jarabe:", s.name, "| Sabor:", s.flavor, "| Volumen:", s.volume, "ml")
-}
